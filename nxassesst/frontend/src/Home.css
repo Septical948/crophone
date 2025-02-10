@@ -1,0 +1,106 @@
+/* Estilos generales de la página de inicio */
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fondo de iluminación (efecto de luz de fondo) */
+.background-light {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+  animation: light-effect 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Efecto de luz de fondo */
+@keyframes light-effect {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+/* Contenedor del logo con animación de aparición */
+.logo-container {
+  opacity: 0;
+  transform: translateY(30px); /* Empuja el logo hacia abajo */
+  animation: logo-appear 3s ease-out forwards;
+}
+
+/* Animación de aparición del logo */
+@keyframes logo-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilo del logo */
+.logo {
+  width: 200px;
+  height: auto;
+}
+
+/* Cuando la página está cargada */
+.loaded .logo-container {
+  animation: logo-loaded 1s ease-out forwards;
+}
+
+/* Animación de subida del logo */
+@keyframes logo-loaded {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50px); /* El logo sube */
+  }
+}
+
+/* Estilos de la animación de carga (rueda giratoria) */
+.loading-spinner {
+  position: absolute;
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+/* Animación de la rueda giratoria */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
