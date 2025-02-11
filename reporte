@@ -1,0 +1,557 @@
+#create a SQL Server report
+
+Param(
+[string]$computername=$env:computername,
+[string]$path="c:\scripts_fibase\review_new.htm"
+)
+#define an empty array to hold all of the HTML fragments
+$fragments=@()
+
+#save current location so I can set it back after importing SQL module
+$curr = get-location
+
+#import the SQL module
+Import-Module SQLPS -DisableNameChecking
+#change the location back
+set-location $curr
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+#get uptime
+Write-Verbose "Getting SQL Server uptime"
+$starttime = Invoke-Sqlcmd -Query 'SELECT sqlserver_start_time AS StartTime FROM sys.dm_os_sys_info' -ServerInstance $computername -database master 
+$version = Invoke-Sqlcmd "Select @@version AS Version"
+
+#create an object
+$uptime = New-Object -TypeName PSObject -Property @{
+ StartTime = $starttime.Item(0)
+ Uptime = (Get-Date)-$starttime.Item(0)
+ Version = $version.Item(0).replace("`n","|")
+}
+
+$fragments += "<h3>SQL Server Uptime and Version</h3>"
+$tmp = $uptime | ConvertTo-HTML -fragment -AS List
+#replace "|" place holder with <br>"
+$fragments += $tmp.replace("|","<br>")
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+#get services
+Write-Verbose "Querying services"
+$services = Get-Service -DisplayName *SQL* -ComputerName $computername | 
+Select Name,Displayname,Status
+$fragments += "<h3>SQL Services</h3>"
+$fragments += $services | ConvertTo-HTML -Fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+
+Write-Verbose "Getting Disk Space"
+$disk = Invoke-Sqlcmd -Query 'SELECT DISTINCT dovs.logical_volume_name AS LogicalName,
+dovs.volume_mount_point AS Drive,
+CONVERT(INT,dovs.available_bytes/1048576.0)/1024 AS FreeSpaceInGB,
+CONVERT(INT,dovs.total_bytes/1048576.0)/1024 as TotalSpace
+FROM sys.master_files mf
+CROSS APPLY sys.dm_os_volume_stats(mf.database_id, mf.FILE_ID) dovs
+ORDER BY FreeSpaceInGB ASC
+GO' -ServerInstance $computername -database master 
+
+$fragments += "<h3>Disk Space</h3>"
+$fragments += $disk|select-object LogicalName,Drive,FreeSpaceInGB,TotalSpace | ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+$sqlbackups=Invoke-Sqlcmd -Query "SET ANSI_WARNINGS OFF
+
+    DECLARE @BackupTable TABLE(DBName VARCHAR(25), LastFull DATETIME NULL, LastDiff DATETIME NULL, LastLog DATETIME NULL);
+
+    INSERT INTO @BackupTable
+        SELECT bs.database_name AS DB_Name, 
+            MAX(CASE WHEN bs.type = 'D' THEN bs.backup_finish_date ELSE NULL END) AS LastFullBackup,
+            MAX(CASE WHEN bs.type = 'I' THEN bs.backup_finish_date ELSE NULL END) AS LastDifferential,
+            MAX(CASE WHEN bs.type = 'L' THEN bs.backup_finish_date ELSE NULL END) AS LastLog
+        FROM msdb.dbo.backupset bs 
+        GROUP BY bs.database_name
+        ORDER BY bs.database_name
+
+    SELECT 
+        db.state_desc   AS DatabaseStatus, 
+        bc.DBName       AS DatabaseName,
+        bc.LastFull     AS LastFullBackup,
+        bc.LastDiff     AS LastDifferential,
+        bc.LastLog      AS LastLog
+    FROM @BackupTable bc LEFT JOIN sys.databases db ON db.name = bc.DBName order by bc.DBName" -ServerInstance $computername -database master 
+
+$fragments += "<h3>Last Backups Per Database</h3>"
+$fragments += $sqlbackups|select-object DatabaseStatus,DatabaseName,LastFullBackup,LastDifferential,LastLog | ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+$sqlwaits=Invoke-Sqlcmd -Query "
+WITH [Waits] AS
+    (SELECT
+        [wait_type],
+        [wait_time_ms] / 1000.0 AS [WaitS],
+        ([wait_time_ms] - [signal_wait_time_ms]) / 1000.0 AS [ResourceS],
+        [signal_wait_time_ms] / 1000.0 AS [SignalS],
+        [waiting_tasks_count] AS [WaitCount],
+       100.0 * [wait_time_ms] / SUM ([wait_time_ms]) OVER() AS [Percentage],
+        ROW_NUMBER() OVER(ORDER BY [wait_time_ms] DESC) AS [RowNum]
+    FROM sys.dm_os_wait_stats
+    WHERE [wait_type] NOT IN (
+        N'BROKER_EVENTHANDLER', N'BROKER_RECEIVE_WAITFOR',
+        N'BROKER_TASK_STOP', N'BROKER_TO_FLUSH',
+        N'BROKER_TRANSMITTER', N'CHECKPOINT_QUEUE',
+        N'CHKPT', N'CLR_AUTO_EVENT',
+        N'CLR_MANUAL_EVENT', N'CLR_SEMAPHORE',
+ 
+        -- Maybe uncomment these four if you have mirroring issues
+        N'DBMIRROR_DBM_EVENT', N'DBMIRROR_EVENTS_QUEUE',
+        N'DBMIRROR_WORKER_QUEUE', N'DBMIRRORING_CMD',
+ 
+        N'DIRTY_PAGE_POLL', N'DISPATCHER_QUEUE_SEMAPHORE',
+        N'EXECSYNC', N'FSAGENT',
+        N'FT_IFTS_SCHEDULER_IDLE_WAIT', N'FT_IFTSHC_MUTEX',
+ 
+        -- Maybe uncomment these six if you have AG issues
+        N'HADR_CLUSAPI_CALL', N'HADR_FILESTREAM_IOMGR_IOCOMPLETION',
+        N'HADR_LOGCAPTURE_WAIT', N'HADR_NOTIFICATION_DEQUEUE',
+        N'HADR_TIMER_TASK', N'HADR_WORK_QUEUE',
+ 
+        N'KSOURCE_WAKEUP', N'LAZYWRITER_SLEEP',
+        N'LOGMGR_QUEUE', N'MEMORY_ALLOCATION_EXT',
+        N'ONDEMAND_TASK_QUEUE',
+        N'PREEMPTIVE_XE_GETTARGETSTATE',
+        N'PWAIT_ALL_COMPONENTS_INITIALIZED',
+        N'PWAIT_DIRECTLOGCONSUMER_GETNEXT',
+        N'QDS_PERSIST_TASK_MAIN_LOOP_SLEEP', N'QDS_ASYNC_QUEUE',
+        N'QDS_CLEANUP_STALE_QUERIES_TASK_MAIN_LOOP_SLEEP',
+        N'QDS_SHUTDOWN_QUEUE', N'REDO_THREAD_PENDING_WORK',
+        N'REQUEST_FOR_DEADLOCK_SEARCH', N'RESOURCE_QUEUE',
+        N'SERVER_IDLE_CHECK', N'SLEEP_BPOOL_FLUSH',
+        N'SLEEP_DBSTARTUP', N'SLEEP_DCOMSTARTUP',
+        N'SLEEP_MASTERDBREADY', N'SLEEP_MASTERMDREADY',
+        N'SLEEP_MASTERUPGRADED', N'SLEEP_MSDBSTARTUP',
+        N'SLEEP_SYSTEMTASK', N'SLEEP_TASK',
+        N'SLEEP_TEMPDBSTARTUP', N'SNI_HTTP_ACCEPT',
+        N'SP_SERVER_DIAGNOSTICS_SLEEP', N'SQLTRACE_BUFFER_FLUSH',
+        N'SQLTRACE_INCREMENTAL_FLUSH_SLEEP',
+        N'SQLTRACE_WAIT_ENTRIES', N'WAIT_FOR_RESULTS',
+        N'WAITFOR', N'WAITFOR_TASKSHUTDOWN',
+        N'WAIT_XTP_RECOVERY',
+        N'WAIT_XTP_HOST_WAIT', N'WAIT_XTP_OFFLINE_CKPT_NEW_LOG',
+        N'WAIT_XTP_CKPT_CLOSE', N'XE_DISPATCHER_JOIN',
+        N'XE_DISPATCHER_WAIT', N'XE_TIMER_EVENT')
+    AND [waiting_tasks_count] > 0
+    )
+SELECT top 10
+    MAX ([W1].[wait_type]) AS [WaitType],
+    CAST (MAX ([W1].[WaitS]) AS DECIMAL (16,2)) AS [Wait_S],
+    CAST (MAX ([W1].[ResourceS]) AS DECIMAL (16,2)) AS [Resource_S],
+    CAST (MAX ([W1].[SignalS]) AS DECIMAL (16,2)) AS [Signal_S],
+    MAX ([W1].[WaitCount]) AS [WaitCount],
+    CAST (MAX ([W1].[Percentage]) AS DECIMAL (5,2)) AS [Percentage],
+    CAST ((MAX ([W1].[WaitS]) / MAX ([W1].[WaitCount])) AS DECIMAL (16,4)) AS [AvgWait_S],
+    CAST ((MAX ([W1].[ResourceS]) / MAX ([W1].[WaitCount])) AS DECIMAL (16,4)) AS [AvgRes_S],
+    CAST ((MAX ([W1].[SignalS]) / MAX ([W1].[WaitCount])) AS DECIMAL (16,4)) AS [AvgSig_S],
+    CAST ('https://www.sqlskills.com/help/waits/' + MAX ([W1].[wait_type]) as XML) AS [Help-Info-URL]
+FROM [Waits] AS [W1]
+INNER JOIN [Waits] AS [W2]
+    ON [W2].[RowNum] <= [W1].[RowNum]
+GROUP BY [W1].[RowNum]
+HAVING SUM ([W2].[Percentage]) - MAX( [W1].[Percentage] ) < 95; -- percentage threshold
+" -ServerInstance $computername -database master 
+
+$fragments += "<h3>SQL Server Waits</h3>"
+$fragments += $sqlwaits|select-object WaitType,Wait_S,Resource_S,Signal_S,WaitCount,Percentage,AvgWait_S,AvgRes_S,AvgSig_S,Help-Info-URL | ConvertTo-HTML -fragment 
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+$sqlmaint=Invoke-Sqlcmd -Query "
+select *
+from(
+SELECT 
+      [sJOB].[name] AS [JobName]
+    , CASE 
+        WHEN [sJOBH].[run_date] IS NULL OR [sJOBH].[run_time] IS NULL THEN NULL
+        ELSE CAST(
+                CAST([sJOBH].[run_date] AS CHAR(8))
+                + ' ' 
+                + STUFF(
+                    STUFF(RIGHT('000000' + CAST([sJOBH].[run_time] AS VARCHAR(6)),  6)
+                        , 3, 0, ':')
+                    , 6, 0, ':')
+                AS DATETIME)
+      END AS [LastRunDateTime]
+    , CASE [sJOBH].[run_status]
+        WHEN 0 THEN 'Failed'
+        WHEN 1 THEN 'Succeeded'
+        WHEN 2 THEN 'Retry'
+        WHEN 3 THEN 'Canceled'
+        WHEN 4 THEN 'Running' -- In Progress
+      END AS [LastRunStatus]
+    , STUFF(
+            STUFF(RIGHT('000000' + CAST([sJOBH].[run_duration] AS VARCHAR(6)),  6)
+                , 3, 0, ':')
+            , 6, 0, ':') 
+        AS [LastRunDuration]
+    , [sJOBH].[message] AS [LastRunStatusMessage]
+    , CASE [sJOBSCH].[NextRunDate]
+        WHEN 0 THEN NULL
+        ELSE CAST(
+                CAST([sJOBSCH].[NextRunDate] AS CHAR(8))
+                + ' ' 
+                + STUFF(
+                    STUFF(RIGHT('000000' + CAST([sJOBSCH].[NextRunTime] AS VARCHAR(6)),  6)
+                        , 3, 0, ':')
+                    , 6, 0, ':')
+                AS DATETIME)
+      END AS [NextRunDateTime]
+FROM 
+    [msdb].[dbo].[sysjobs] AS [sJOB]
+    LEFT JOIN (
+                SELECT
+                    [job_id]
+                    , MIN([next_run_date]) AS [NextRunDate]
+                    , MIN([next_run_time]) AS [NextRunTime]
+                FROM [msdb].[dbo].[sysjobschedules]
+                GROUP BY [job_id]
+            ) AS [sJOBSCH]
+        ON [sJOB].[job_id] = [sJOBSCH].[job_id]
+    LEFT JOIN (
+                SELECT 
+                    [job_id]
+                    , [run_date]
+                    , [run_time]
+                    , [run_status]
+                    , [run_duration]
+                    , [message]
+                    , ROW_NUMBER() OVER (
+                                            PARTITION BY [job_id] 
+                                            ORDER BY [run_date] DESC, [run_time] DESC
+                      ) AS RowNumber
+                FROM [msdb].[dbo].[sysjobhistory]
+                WHERE [step_id] = 0
+            ) AS [sJOBH]
+        ON [sJOB].[job_id] = [sJOBH].[job_id]
+        AND [sJOBH].[RowNumber] = 1
+		) a
+		where a.JobName in('DatabaseIntegrityCheck - USER_DATABASES','IndexOptimize - USER_DATABASES','Rebuild Indexes')
+ORDER BY [JobName]" -ServerInstance $computername -database master 
+
+$fragments += "<h3>SQL Server Maintenance Jobs</h3>"
+$fragments += $sqlmaint|select-object JobName,LastRunDateTime,LastRunStatus,LastRunDuration,LastRunStatusMessage,NextRunDateTime | ConvertTo-HTML -fragment 
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+$sqlag=Invoke-Sqlcmd -Query "SELECT 
+	ar.replica_server_name, 
+	adc.database_name, 
+	ag.name AS ag_name, 
+	drs.is_local, 
+	drs.is_primary_replica, 
+	drs.synchronization_state_desc, 
+	drs.is_commit_participant, 
+	drs.synchronization_health_desc, 
+	drs.recovery_lsn, 
+	drs.truncation_lsn, 
+	drs.last_sent_lsn, 
+	drs.last_sent_time, 
+	drs.last_received_lsn, 
+	drs.last_received_time, 
+	drs.last_hardened_lsn, 
+	drs.last_hardened_time, 
+	drs.last_redone_lsn, 
+	drs.last_redone_time, 
+	drs.log_send_queue_size, 
+	drs.log_send_rate, 
+	drs.redo_queue_size, 
+	drs.redo_rate, 
+	drs.filestream_send_rate, 
+	drs.end_of_log_lsn, 
+	drs.last_commit_lsn, 
+	drs.last_commit_time
+FROM sys.dm_hadr_database_replica_states AS drs
+INNER JOIN sys.availability_databases_cluster AS adc 
+	ON drs.group_id = adc.group_id AND 
+	drs.group_database_id = adc.group_database_id
+INNER JOIN sys.availability_groups AS ag
+	ON ag.group_id = drs.group_id
+INNER JOIN sys.availability_replicas AS ar 
+	ON drs.group_id = ar.group_id AND 
+	drs.replica_id = ar.replica_id
+ORDER BY 
+	ag.name, 
+	ar.replica_server_name, 
+	adc.database_name;" -ServerInstance $computername -database master 
+
+$fragments += "<h3>AG Status</h3>"
+$fragments += $sqlag|select-object     replica_server_name,database_name,ag_name,is_local,is_primary_replica,synchronization_state_desc,is_commit_participant,synchronization_health_desc,recovery_lsn,truncation_lsn,last_sent_lsn,last_sent_time,last_received_lsn,last_received_time,last_hardened_lsn,last_hardened_time,last_redone_lsn,last_redone_time,log_send_queue_size,log_send_rate,redo_queue_size,redo_rate,filestream_send_rate,end_of_log_lsn,last_commit_lsn,last_commit_time | ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+$batchreq=Invoke-Sqlcmd -Query "select top 10 servername,checkdate,findingsgroup,finding,detailsint
+from DBA.dbo.blitzfirst
+where checkdate >= getdate()-7 
+and finding in ('Batch requests per sec')
+order by detailsint desc" -ServerInstance $computername -database master 
+
+$fragments += "<h3>Batch Request per second</h3>"
+$fragments += $batchreq|select-object servername,checkdate,findingsgroup,finding,detailsint| ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+$cpucon=Invoke-Sqlcmd -Query "select top 10 servername,checkdate,findingsgroup,finding,detailsint
+from DBA.dbo.blitzfirst
+where checkdate >= getdate()-7
+and finding like ('CPU%')
+order by detailsint desc" -ServerInstance $computername -database master 
+
+$fragments += "<h3>CPU Utilization</h3>"
+$fragments += $cpucon|select-object servername,checkdate,findingsgroup,finding,detailsint| ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+$storedproc=Invoke-Sqlcmd -Query "
+DECLARE @sqlmajorver int, @sqlcmd VARCHAR(4000)
+SELECT @sqlmajorver = CONVERT(int, (@@microsoftversion / 0x1000000) & 0xff);
+
+IF @sqlmajorver >= 11
+BEGIN
+	SET @sqlcmd = N'SELECT top 10 CASE WHEN ps.database_id = 32767 THEN ''ResourceDB'' ELSE DB_NAME(ps.database_id) END AS DatabaseName, 
+	CASE WHEN ps.database_id = 32767 THEN NULL ELSE OBJECT_NAME(ps.[object_id], ps.database_id) END AS ObjectName,
+	ps.last_execution_time,
+	ps.execution_count,
+	ps.total_elapsed_time/ps.execution_count AS avg_elapsed_time_inmicroseconds,
+	ps.last_elapsed_time as last_elapsed_time_inmicroseconds,
+	ps.total_worker_time/ps.execution_count AS avg_cpu_time_inmicroseconds,
+	ps.last_worker_time AS last_cpu_time_inmicroseconds,
+	ps.max_worker_time AS max_cpu_time_inmicroseconds,
+	ps.total_logical_reads/ps.execution_count AS avg_logical_reads,
+	ps.last_logical_reads, 
+	ps.total_physical_reads/ps.execution_count AS avg_physical_reads,
+	ps.last_physical_reads,
+	ps.total_logical_writes/ps.execution_count AS avg_logical_writes,
+	ps.last_logical_writes
+ FROM sys.dm_exec_procedure_stats (NOLOCK) ps
+ CROSS APPLY sys.dm_exec_query_plan(ps.plan_handle) qp
+ where DB_NAME(ps.database_id) not in (''master'',''model'',''msdb'')
+ order by ps.total_elapsed_time/ps.execution_count desc '
+	EXEC (@sqlcmd);
+ END" -ServerInstance $computername -database master 
+
+$fragments += "<h3>Stored procedure stats</h3>"
+$fragments += $storedproc|select-object DatabaseName,ObjectName,last_execution_time,execution_count,avg_elapsed_time_inmicroseconds,last_elapsed_time_inmicroseconds,avg_cpu_time_inmicroseconds,last_cpu_time_inmicroseconds,max_cpu_time_inmicroseconds,avg_logical_reads,last_logical_reads,avg_physical_reads,last_physical_reads,avg_logical_writes,last_logical_writes| ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+$querystats=Invoke-Sqlcmd -Query "
+DECLARE @sqlmajorver int, @sqlcmd VARCHAR(4000)
+SELECT @sqlmajorver = CONVERT(int, (@@microsoftversion / 0x1000000) & 0xff);
+
+-- Query stats
+IF @sqlmajorver >= 11
+BEGIN
+	SET @sqlcmd = N'SELECT top 10 CASE WHEN CONVERT(int,pa.value) = 32767 THEN ''ResourceDB'' ELSE DB_NAME(CONVERT(int,pa.value)) END AS DatabaseName,
+	qs.last_execution_time,
+	qs.execution_count,
+	qs.total_elapsed_time/qs.execution_count AS avg_elapsed_time_inmicroseconds,
+	qs.last_elapsed_time as last_elapsed_time_inmicroseconds,
+	qs.total_worker_time/qs.execution_count AS avg_cpu_time_inmicrosecond,
+	qs.last_worker_time AS last_cpu_time_inmicrosecond,
+	qs.max_worker_time AS max_cpu_time_inmicrosecond,
+	qs.total_logical_reads/qs.execution_count AS avg_logical_reads,
+	qs.last_logical_reads, 
+	qs.total_physical_reads/qs.execution_count AS avg_physical_reads,
+	qs.last_physical_reads, 
+	qs.total_logical_writes/qs.execution_count AS avg_logical_writes,
+	qs.last_logical_writes,
+	(SELECT substring(text,1,500) AS [text()] FROM sys.dm_exec_sql_text(qs.plan_handle)
+	 where text not like ''%CREATE PROCEDURE%'') AS [sqltext]
+FROM sys.dm_exec_query_stats (NOLOCK) AS qs
+CROSS APPLY sys.dm_exec_plan_attributes(qs.plan_handle) AS pa
+WHERE pa.attribute = ''dbid''
+ and  DB_NAME(CONVERT(int,pa.value)) not in (''master'',''model'',''msdb'')
+ and  qs.execution_count > 10
+ and (SELECT text AS [text()] FROM sys.dm_exec_sql_text(qs.plan_handle)
+	 where text not like ''%CREATE PROCEDURE%'') is not null
+ order by qs.total_elapsed_time/qs.execution_count desc'
+	EXEC (@sqlcmd);
+END" -ServerInstance $computername -database master 
+$fragments += "<h3>Query stats</h3>"
+$fragments += $querystats|select-object DatabaseName,last_execution_time,execution_count,avg_elapsed_time_inmicroseconds,last_elapsed_time_inmicroseconds,avg_cpu_time_inmicrosecond,last_cpu_time_inmicrosecond,max_cpu_time_inmicrosecond,avg_logical_reads,last_logical_reads,avg_physical_reads,last_physical_reads,avg_logical_writes,last_logical_writes,sqltext| ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+$missindex=Invoke-Sqlcmd -Query "
+SELECT 
+	top 10 db_name(mid.database_id) AS DatabaseID,
+	OBJECT_SCHEMA_NAME (mid.OBJECT_ID,mid.database_id) AS [SchemaName],
+	OBJECT_NAME(mid.OBJECT_ID,mid.database_id) AS [TableName],
+	migs.user_seeks as [Index_seeks],
+	migs.user_scans as [Index_scans],
+        migs.[user_seeks] * migs.[avg_total_user_cost] * (migs.[avg_user_impact] * 0.01) AS [IndexAdvantage],
+	mid.equality_columns, 
+	mid.inequality_columns, 
+	mid.included_columns,
+	migs.last_user_seek,
+		'CREATE INDEX [IX_' + OBJECT_NAME(mid.OBJECT_ID,mid.database_id) + '_'
+	+ REPLACE(REPLACE(REPLACE(ISNULL(mid.equality_columns,''),', ','_'),'[',''),']','') 
+	+ CASE
+			WHEN mid.equality_columns IS NOT NULL AND mid.inequality_columns IS NOT NULL 
+			THEN '_'
+			ELSE ''
+	  END
+	+ REPLACE(REPLACE(REPLACE(ISNULL(mid.inequality_columns,''),', ','_'),'[',''),']','')
+	+ ']'
+	+ ' ON ' + mid.statement
+	+ ' (' + ISNULL (mid.equality_columns,'')
+	+ CASE WHEN mid.equality_columns IS NOT NULL AND mid.inequality_columns 
+	IS NOT NULL THEN ',' ELSE
+	'' END
+	+ ISNULL (mid.inequality_columns, '')
+	+ ')'
+	+ ISNULL (' INCLUDE (' + mid.included_columns + ');', '') AS [Create_TSQL]
+FROM sys.dm_db_missing_index_group_stats AS migs WITH (NOLOCK)
+INNER JOIN sys.dm_db_missing_index_groups AS mig WITH (NOLOCK) ON migs.group_handle = mig.index_group_handle
+INNER JOIN sys.dm_db_missing_index_details AS mid WITH (NOLOCK) ON mig.index_handle = mid.index_handle
+ORDER BY [IndexAdvantage] DESC OPTION (RECOMPILE);"-ServerInstance $computername -database master 
+$fragments += "<h3>Missing indexes</h3>"
+$fragments += $missindex|select-object DatabaseID,SchemaName,TableName,Index_seeks,Index_scans,IndexAdvantage,equality_columns,inequality_columns,included_columns,last_user_seek,Create_TSQL| ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+$deadlocks=Invoke-Sqlcmd -Query "
+SET NOCOUNT ON;
+CREATE TABLE #DeadLockXMLData(DeadLockXMLData XML,DeadLockNumber INT)
+CREATE TABLE #DeadLockDetails(ProcessID nVARCHAR(50),HostName nVARCHAR(50),LoginName nVARCHAR(100)
+,ClientApp nVARCHAR(100), Frame nVARCHAR(MAX),TSQLString nVARCHAR(MAX),DeadLockDateTime DATETIME,IsVictim TINYINT,DeadLockNumber INT)
+DECLARE @DeadLockXMLData AS XML,@DeadLockNumber INT,@getInputBuffer CURSOR,@Document AS INT, @SQLString NVARCHAR (MAX);
+ 
+/*INSERT THE DEADLOCKS FROM EXTENDED EVENTS TO TEMP TABLES & FILTER ONLY DEADLOCKS*/
+INSERT INTO #DeadLockXMLData(DeadLockXMLData,DeadLockNumber)
+SELECT CONVERT(XML, event_data) DeadLockXMLData,ROW_NUMBER() OVER (ORDER BY Object_name) DeadLockNumber
+FROM sys.fn_xe_file_target_read_file(N'system_health*.xel', NULL, NULL, NULL)
+WHERE OBJECT_NAME = 'xml_deadlock_report'
+ 
+/*START A CURSOR TO LOOP THROUGH ALL THE DEADLOCKS AS YOU MIGHT GET MUTLTIPLE DEADLOCK IN PRODUCTION AND YOU WOULD WANT ALL OF THEM*/
+SET	 @getInputBuffer = CURSOR FOR
+SELECT  DeadLockXMLData,DeadLockNumber 
+FROM #DeadLockXMLData
+OPEN @getInputBuffer
+ 
+FETCH NEXT
+FROM @getInputBuffer INTO @DeadLockXMLData,@DeadLockNumber
+ 
+WHILE @@FETCH_STATUS = 0
+ 
+BEGIN
+SET	   @Document =   0
+SET	   @SQLString =   ''
+ 
+EXEC sp_xml_preparedocument @Document OUTPUT, @DeadLockXMLData
+ 
+/*INSERT PARSED DOCUMENT'S DATA FROM XML TO TEMP TABLE FOR READABILITY*/
+INSERT INTO #DeadLockDetails(ProcessID,HostName,LoginName,ClientApp,Frame,TSQLString,DeadLockDateTime,DeadLockNumber)
+SELECT  ProcessID, HostName,LoginName,ClientApp, Frame,TSQL AS  TSQLString,LastBatchCompleted,@DeadLockNumber
+FROM OPENXML(@Document, 'event/data/value/deadlock/process-list/process')
+WITH 
+(
+ProcessID [varchar](50) '@id',
+HostName [varchar](50) '@hostname',
+LoginName [varchar](50) '@loginname',
+ClientApp [varchar](50) '@clientapp',
+CustomerName [varchar](100) '@clientapp',
+TSQL [nvarchar](4000) 'inputbuf',
+Frame nVARCHAR(4000) 'executionStack/frame',
+LastBatchCompleted nVARCHAR(50) '@lastbatchcompleted'
+)
+ 
+/*UPDATE THE VICTIM SPID TO HIGHLIGHT TWO QUERIES SEPARETELY, THE PROCESS (WHO CREATED THE DEADLOCK) AND THE VICTIM*/
+ 
+UPDATE  #DeadLockDetails
+SET	   IsVictim = 1
+WHERE   ProcessID IN (
+SELECT  ProcessID 
+FROM OPENXML(@Document, 'event/data/value/deadlock/victim-list/victimProcess')
+WITH 
+(
+ProcessID [varchar](50) '@id',
+HostName [varchar](50) '@hostname',
+LoginName [varchar](50) '@loginname',
+ClientApp [varchar](50) '@clientapp',
+CustomerName [varchar](100) '@clientapp',
+TSQL [nvarchar](4000) 'inputbuf',
+Frame nVARCHAR(4000) 'executionStack/frame',
+LastBatchCompleted nVARCHAR(50) '@lastbatchcompleted'
+)
+)
+ 
+EXEC sp_xml_removedocument @Document
+ 
+FETCH NEXT
+FROM @getInputBuffer INTO @DeadLockXMLData,@DeadLockNumber
+ 
+END
+ 
+CLOSE   @getInputBuffer
+DEALLOCATE @getInputBuffer
+ 
+ 
+
+SELECT  substring(convert(varchar(50),DeadLockDateTime),1,11) as Deadlock_Time,count(HostName) as Count_Of_Deadlocks_Per_Day
+FROM #DeadLockDetails D
+WHERE IsVictim = 1
+group by substring(convert(varchar(50),DeadLockDateTime),1,11)"-ServerInstance $computername -database master 
+$fragments += "<h3>Deadlocks per day</h3>"
+$fragments += $deadlocks|select-object Deadlock_Time,Count_Of_Deadlocks_Per_Day | ConvertTo-HTML -fragment
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------#
+
+# URL imagen
+$imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ59QsHpSRxeH7llIZpjTvHMWeWBvR7-vHldEd2GcZY9Q&s"
+$imageBytes = (New-Object System.Net.WebClient).DownloadData($imageUrl)
+$ImageBits = [Convert]::ToBase64String($imageBytes)
+$ImageHTML = "<img src='data:image/png;base64,$ImageBits'/>"
+
+#define the HTML style
+#Write-Verbose "preparing report"
+#$imagefile = "C:\scripts_fibase\fibaselatam.jpg"
+#$ImageBits = [Convert]::ToBase64String((Get-Content $imagefile -Encoding Byte))
+#$ImageHTML = "<img src=data:image/png;base64,$($ImageBits)'/>"
+
+#$imagefile2 = "C:\scripts_fibase\fibaselatam.jpg"
+#$ImageBits2 = [Convert]::ToBase64String((Get-Content $imagefile2 -Encoding Byte))
+#$ImageHTML2 = "<img src=data:image/png;base64,$($ImageBits2)'/>"
+
+$head = @"
+<style>
+body { background-color:#FAFAFA;
+       font-family:Arial;
+       font-size:12pt; }
+td, th { border:1px solid black; 
+         border-collapse:collapse; }
+th { color:white;
+     background-color:black; }
+table, tr, td, th { padding: 2px; margin: 0px }
+tr:nth-child(odd) {background-color: lightgray}
+table { margin-left:50px; }
+img
+{
+float:rigth;
+margin: 0px 350px;
+}
+
+</style>
+$imagehtml
+<br><br><br>
+<H2>INAC</H2>
+<H2>Reporte SQL Server</H2>
+<H2>Server Name: $Computername </H2>
+<br>
+"@
+
+#create the HTML document
+ConvertTo-HTML -Head $head -Body $fragments -PostContent "<i> Report Generated: $(Get-Date)</i> $ImageHTML2" |
+Out-File -FilePath $path -Encoding ascii
+
+Write-Verbose "Opening report"
+Invoke-Item $path
