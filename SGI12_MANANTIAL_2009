@@ -1,0 +1,843 @@
+GRANTEE                        GRANTED_ROLE                   ADM DEF
+------------------------------ ------------------------------ --- ---
+SGI12_MANANTIAL_2009           CONNECT                        NO  YES
+
+SYSTEM:waldbott >
+GRANTEE                        PRIVILEGE                                ADM
+------------------------------ ---------------------------------------- ---
+SGI12_MANANTIAL_2009           CREATE PROCEDURE                         NO
+SGI12_MANANTIAL_2009           CREATE TABLE                             NO
+SGI12_MANANTIAL_2009           CREATE VIEW                              NO
+SGI12_MANANTIAL_2009           DROP PUBLIC SYNONYM                      NO
+SGI12_MANANTIAL_2009           CREATE PUBLIC SYNONYM                    NO
+SGI12_MANANTIAL_2009           CREATE TRIGGER                           NO
+SGI12_MANANTIAL_2009           CREATE SEQUENCE                          NO
+SGI12_MANANTIAL_2009           CREATE SYNONYM                           NO
+
+8 rows selected.
+
+SYSTEM:waldbott >
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CPA                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ASIENTOSIMP                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CONCEPTOS_ERRONEOSBK        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ANEG                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_OC_DATOS                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVIMIENTOS_CONCEPTOS       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CCOSTOS                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CONCEPTOS_ERRONEOS          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_VALORES                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_TRAZABILIDAD_REQ_OC         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_TRANSPORTES                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_TIPOS_DE_CAMBIO             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_SUCURSALES                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_SUBRUBRO_ART                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_SIN_IVA_COMPRAS             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_SECTOR                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RUBROS_ART                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RETIVA                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RETGAN                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RETENCIONES_NO_RESIDENTES   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RETENCIONES                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_REQUERIMIENTOS_LIBERADOS    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_REQUERIMIENTOS_EB           SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_REQUERIMIENTOS              SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_REQ_SOLICITANTES_EB         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_REP_MOV_PROV                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_REGIMENAFIP                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RECEPCIONES_PROVE_ASIENTOS2 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RECEPCIONES_PROVE_ASIENTOS  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RECEPCIONES_PROVE           SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_RECEP_INCONSISTENTES        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_PROVINCIAS                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_PROVEEDOR                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_PRESENTACIONES              SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_PLANILLAS_COMPRAS2          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_PLANILLAS_COMPRAS           SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_PARAMETROS                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ORDENES_COMPRA              SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_NUMERADOR                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVIMIENTOS_STOCKS          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVIMIENTOS                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVFDOSI_RES                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVFDOSI_OP                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVFDOSI_2                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVFDOSI                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVFDOSC_MOVFDOSI           SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVFDOSC                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MOVCAJAS                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_MONEDAS                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_LISTAS_PRECIOS              SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_IVA_VENTAS                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_IVA_STOCK                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_IVA_COMPRAS                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ITEMS_FACTURACION_CECO      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_INDUSTRIAS                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_IMPUESTOS_PROV              SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_IMPUESTOS_CLI               SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_IMPUESTOS_ART               SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_FONDOS                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ESTADOS_PEDIDOS             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_DIFERENCIAS_UCFE_WALDBOTT   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_DIFERENCIAS_COTIZ_ASTO      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_DESTINACIONES               SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_DEPOSITOS                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_DEPARTAMENTOS               SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CUOTAS                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CTAPROCOMPTASAS             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CTAPRO_OP_02                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CTAPRO_OP_01                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CTAPRO_INPUTAC              SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CTACLICOMPTASAS             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COTIZACION                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COTIZA_MONEDAS              SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CONTROL_FECHA               SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CONN_COTIZACION             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COND_PAGO                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CONCEPTOS_VENTA             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CONCEPTOS                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COMPROBANTES_USUARIOS       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COMPROBANTES_CONTA          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COMPROBANTES                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COMPRADORES                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COD_IB                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_COD_CUIT                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CCOSTO_IMPUTABLE_EDL        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_CAJAS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_BANCOS                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ASIENTOS_IVA                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ASIENTOS                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ASIENTOC                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ARTICULOS_VENTA             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ARTICULOS                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ANEGO_IMPUTABLE_EDL         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_AFE_IMPUTACIONES            SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VW_ADUANAS                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AGENDA                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AGENDAC                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           BANCODEBITO                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           USU_PROV_ELECT                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ZZ_PPP_CODIGOS                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RPT_CONTROL_ARTICULO_DEPOSITO  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROV1                          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PAISES_SELECCIONADOS           SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROV2                          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           DATOS_CUENTA                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ZZ_PPP_ARTICULO_FECHA_NEWPPP   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ART3                           SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROOVEDO1                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           USUARIOS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CODIGOS_FINANCIEROS            SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ARTICULOSINH                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VALORUI                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           USERS_PPP                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RPT_CONSUMOS_STOCK             SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           TMP_CTRL_ARTICULO_DEPOSITO_NEW SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RPT_CTRL_ARTICULO_DEPOSITO_NEW SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ZZ_PPP_ARTICULO_FECHA_DEF      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RPT_RELACION_RECEPCIONES_STOCK SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           DATOS_BANCOS                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           TMP_PROV_CP                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ZZ_PPP_ARTICULO_FECHA          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ITITEMS_BACK_PPP               SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ARTICULO_BACK_PPP              SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VENDEDOR                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           VALOR                          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           USUARIOSGI                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           UCFEWS                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           TABLASI09                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           TABLAS                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           STOCKS                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           SERVICIOIT                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           SERVICIO                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RUDITEMS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RPAITEMS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RETENCIO                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           REQPROV                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           REQITEMS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           REQCABEZA                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           REPORTESSQL                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RENUMERAR                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RECLAMOSDET                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RECLAMOS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RCAITEMS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           RASITEMS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROYANT                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROVRETEN                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROVPERCEP                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROVPARSOC                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROVEEDO                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PROVCAIS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PLANNECESIDADES                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PLANMATERIALES                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PLANDESPIECE                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PLANCTAS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PDTAREASI                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PDTAREASC                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PDSEGUIMIENTO                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PDITEMS                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           PDCABEZA                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ORDPROD                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OPITEMS                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OPINTEGRANTES                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OPCABEZA                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OIITEMS                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OIGASTOS                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OICONT                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OICABEZA                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OCITEMS                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           OCCABEZA                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           NROSERIE                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           MOVFDOSI                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           MOVFDOSC                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           MENSAJESPARA                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           MENSAJES                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           LISTASHEREDADAS                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           LISTASCANTIDAD                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           LISTAS                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ITSERIE                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ITITEMS                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ITCABEZA                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           INVENTARIO                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           IDIOMAG                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           FACCRED                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           EXTRACTI                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           EXTRACTC                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ESTADIST                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           EMAILSPROV                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           EMAILSCLTE                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           DESPACHO                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           DESCRIPCIONES                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           DEPOSITOS                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CUADERNOTAREAS                 SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTAPROTASAS                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTAPROPERCEP                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTAPROCOMP                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTAPROASTO                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTAPRO                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTACLITASAS                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTACLIRETEN                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTACLIPERCEP                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTACLICOMP                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CTACLI                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CONTROL                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CONTRATOS                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CONSULTASSQLUSUARIOS           SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CONSULTASSQL                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           COMPOSIC                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CODIGOSBARRAS                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           COBRANZAS                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CLTEVEND                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CLTESPERCEP                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CLTESENTREGA                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CLIENTES                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AUDITAOPER                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AUDITAMENU                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AUDITA                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ARTICULO                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           APROBADORES                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AFIPWSFE                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AFIPWSCI                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AFIPWSAA                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           USUARIOSGC                     SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           TABLASC                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           SUBDIARI                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           SEGUROS                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           REPORTESSQLC                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           REPARACIONES                   SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           MENSAJESPARAC                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           MENSAJESC                      SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           INVERSIONES                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           IDIOMA                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CUENTAS                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CUENTAP                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CUADERNOTAREASC                SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CONSULTASSQLUSUARIOSC          SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CONSULTASSQLC                  SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CCOSTOS                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           CCOSTO2                        SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           BIENESCBIOS                    SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           BIENES                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+
+GRANTEE                        OWNER                          TABLE_NAME                     GRANTOR
+------------------------------ ------------------------------ ------------------------------ ------------------------------
+PRIVILEGE                                GRA HIE
+---------------------------------------- --- ---
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           AUDITC                         SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ASIENTTI                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ASIENTTC                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ASIENTPI                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ASIENTPC                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ASIENTOI                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
+
+SGI12_MANANTIAL_2009           SGI11_MANANTIAL_2009           ASIENTOC                       SGI11_MANANTIAL_2009
+SELECT                                   NO  NO
