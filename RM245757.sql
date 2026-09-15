@@ -1,1 +1,0 @@
-insert into traduceagentecobro(traduceagentecobroagenteid, traduceagentecobroagridn) values(415, 429);
